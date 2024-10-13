@@ -1,0 +1,97 @@
+day = 1; 
+month = "May";
+dayofchoice = 5;
+year = 2024;
+
+if dayofchoice > 7
+    dayofchoice = mod(dayofchoice, 7);
+end
+
+while (year < 2100)
+    year = year + 1; 
+    defaultkey = 2; 
+    last2digits = year - 2000; 
+    firstkey = fix(last2digits / 12); 
+    secondkey = mod(last2digits, 12); 
+    thirdkey = fix(secondkey / 4); 
+    result = defaultkey + firstkey + secondkey + thirdkey; 
+
+    while result >= 7
+        result = result - 7; 
+    end
+
+    switch month
+        case "January"
+            doomsdayofmonth = 3; 
+        case "February"
+            if mod(year, 4) == 0 && (mod(year, 100) ~= 0 || mod(year, 400) == 0)
+                doomsdayofmonth = 29; 
+            else
+                doomsdayofmonth = 28; 
+            end
+        case "March"
+            doomsdayofmonth = 7; 
+        case "April"
+            doomsdayofmonth = 4; 
+        case "May"
+            doomsdayofmonth = 9; 
+        case "June"
+            doomsdayofmonth = 6; 
+        case "July"
+            doomsdayofmonth = 11; 
+        case "August"
+            doomsdayofmonth = 8; 
+        case "September"
+            doomsdayofmonth = 5; 
+        case "October"
+            doomsdayofmonth = 10; 
+        case "November"
+            doomsdayofmonth = 7; 
+        case "December"
+            doomsdayofmonth = 12; 
+    end
+
+    switch result
+        case 0
+            weekdaynr = 0; 
+            weekday = "Sunday"; 
+        case 1
+            weekdaynr = 1; 
+            weekday = "Monday"; 
+        case 2
+            weekdaynr = 2; 
+            weekday = "Tuesday"; 
+        case 3
+            weekdaynr = 3; 
+            weekday = "Wednesday"; 
+        case 4
+            weekdaynr = 4; 
+            weekday = "Thursday"; 
+        case 5
+            weekdaynr = 5; 
+            weekday = "Friday"; 
+        case 6
+            weekdaynr = 6; 
+            weekday = "Saturday"; 
+    end
+
+    if day > doomsdayofmonth
+        diff = day - doomsdayofmonth; 
+        calc = mod(diff, 7); 
+        final = weekdaynr + calc; 
+    elseif day < doomsdayofmonth
+        diff = doomsdayofmonth - day; 
+        calc = mod(diff, 7); 
+        final = weekdaynr - calc; 
+        
+        if final < 0
+            final = final + 7; 
+        end
+    else
+        final = weekdaynr;
+    end
+
+    if final == dayofchoice
+        disp(year); 
+    end
+end
